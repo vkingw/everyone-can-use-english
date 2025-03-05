@@ -12,6 +12,13 @@ watch(() => router.route.data.relativePath, (newVal, oldVal) => {
   }
 }, { immediate: true });
 
+function wrapAssetUrl(url) {
+  if (window.location.hostname !== '1000h.org' && window.location.hostname !== 'localhost') {
+    return `/1000-hours${url}`;
+  }
+  return url;
+}
+
 function buildPlayButton(parent, accent, gender, url) {
   gender = gender || 'male';
   accent = accent || 'us';
@@ -28,7 +35,7 @@ function buildPlayButton(parent, accent, gender, url) {
   const emojiEl = document.createElement('span');
   emojiEl.classList.add('emoji');
 
-  let svg = '/images/speaker-white.svg';
+  let svg = wrapAssetUrl('/images/speaker-white.svg');
   let iconEmoji = '🇺🇸';
   if (accent === 'uk') {
     iconEmoji = '🇬🇧';
@@ -89,6 +96,13 @@ function convertToInlineComponent(el) {
   // fill dataAudio
   const dataAudio = fillDataAudio(el);
   console.log('inline component', dataAudio)
+
+  // check the hostname.
+  for (let i = 0; i < dataAudio.length; i++) {
+    if (dataAudio[i].value) {
+      dataAudio[i].value = wrapAssetUrl(dataAudio[i].value);
+    }
+  }
 
   const wrapperEl = document.createElement('div')
   wrapperEl.classList.add('speak-word-wrapper')
