@@ -77,6 +77,14 @@ export const Sidebar = (props: {
     });
   }, []);
 
+  useEffect(() => {
+    if (displayPreferences) {
+      EnjoyApp.view.hide();
+    } else {
+      EnjoyApp.view.show();
+    }
+  }, [displayPreferences]);
+
   return (
     <div
       className={`h-content pt-8 transition-all relative draggable-region ${
@@ -120,6 +128,15 @@ export const Sidebar = (props: {
               tooltip={t("sidebar.courses")}
               active={activeTab.startsWith("/courses")}
               Icon={GraduationCapIcon}
+              isCollapsed={isCollapsed}
+            />
+
+            <SidebarItem
+              href="/community"
+              label={t("sidebar.community")}
+              tooltip={t("sidebar.community")}
+              active={activeTab.startsWith("/community")}
+              Icon={UsersRoundIcon}
               isCollapsed={isCollapsed}
             />
 
@@ -345,13 +362,6 @@ const SidebarHeader = (props: { isCollapsed: boolean }) => {
           >
             <span>{t("sidebar.profile")}</span>
             <UserIcon className="size-4 ml-auto" />
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onSelect={() => navigate("/community")}
-          >
-            <span>{t("sidebar.community")}</span>
-            <UsersRoundIcon className="size-4 ml-auto" />
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem

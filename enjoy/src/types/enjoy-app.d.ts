@@ -87,10 +87,25 @@ type EnjoyAppType = {
         navigatable?: boolean;
       }
     ) => Promise<void>;
-    show: (bounds: any) => Promise<void>;
+    show: (bounds?: any) => Promise<void>;
     hide: () => Promise<void>;
     remove: () => Promise<void>;
     scrape: (url: string) => Promise<void>;
+    loadCommunity: (
+      bounds: { x: number; y: number; width: number; height: number },
+      options?: {
+        navigatable?: boolean;
+        accessToken?: string;
+        url?: string;
+        ssoUrl?: string;
+      }
+    ) => Promise<void>;
+    resize: (bounds: {
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+    }) => Promise<void>;
     onViewState: (
       callback: (
         event,
